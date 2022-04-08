@@ -1,8 +1,9 @@
 ﻿namespace Code{
     public enum GameState{
+        None,
         HelloWindow,
         Menu,
-        Game,
+        Fight,
         Ads
     }
 }
