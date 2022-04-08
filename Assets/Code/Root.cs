@@ -1,23 +1,52 @@
 ﻿using Code.BaseControllers;
+using Code.Data;
+using Code.Extensions;
 using UniRx;
 using UnityEngine;
 
 
 namespace Code{
     public class Root : MonoBehaviour{
-        private ReactiveProperty<GameState> _gameState;
-        
         [SerializeField]
-        private GameState _stateAfterStart = GameState.HelloWindow;
+        private Transform _targetPosition;
+        [SerializeField]
+        private Transform _throwPosition;
+        [SerializeField]
+        private GameState _stateAfterStart = GameState.Fight;
 
         private void Awake(){
-            _gameState = new ReactiveProperty<GameState>{Value = _stateAfterStart};
+            var gameData = new GameData{
+                TargetPosition = _targetPosition,
+                ThorwPosition = _throwPosition,
+                GameState = new ReactiveProperty<GameState>{Value = _stateAfterStart},
+                PlayerData = LoadPlayerSettings(),
+                EnemiesData = LoadEnemiesSettings(),
+                KnivesData = LoadKnivesData()
+            };
 
-            var mainController = new MainController(true, _gameState);
-            Controllers.Add(mainController);
-            
-            
+            var mainController = new MainController(true, gameData);
+
             Controllers.Init();
+        }
+
+        private PlayerData LoadPlayerSettings(){
+            var result = new PlayerData();
+            result.Progress = ResourceLoader.LoadConfig<PlayerProgress>();
+            // result.Purchases....
+            return result;
+        }
+
+        private EnemiesData LoadEnemiesSettings(){
+            var result = new EnemiesData();
+            result.ListStandardEnemies = ResourceLoader.LoadConfig<ListStandardEnemies>();
+            result.ListBosses = ResourceLoader.LoadConfig<ListBosses>();
+            return result;
+        }
+
+        private KnivesData LoadKnivesData(){
+            var result = new KnivesData();
+            result.List = ResourceLoader.LoadConfig<ListKnivesData>();
+            return result;
         }
 
         private void Update()

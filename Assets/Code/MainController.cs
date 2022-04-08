@@ -1,18 +1,19 @@
 ﻿using System;
 using Code.BaseControllers;
-using Code.BaseControllers.Interfaces;
+using Code.Fight;
 using UniRx;
 
 
 namespace Code{
     internal class MainController : BaseController{
-        private readonly ReactiveProperty<GameState> _gameState;
+        private readonly GameData _gameData;
         private GameState _oldState = GameState.None;
+        private FightController _fightController;
 
-        public MainController(bool active, ReactiveProperty<GameState> gameState): base(active){
-            _gameState = gameState;
+        public MainController(bool active, GameData gameData): base(active){
+            _gameData = gameData;
 
-            _gameState.Subscribe(OnChangeGameState).AddTo(_subscriptions);
+            _gameData.GameState.Subscribe(OnChangeGameState).AddTo(_subscriptions);
         }
 
         private void OnChangeGameState(GameState state){
@@ -26,7 +27,7 @@ namespace Code{
                 case GameState.Menu:
                     break;
                 case GameState.Fight:
-                    // _fightController = new FightController();
+                    _fightController = new FightController(_gameData);
                     break;
                 case GameState.Ads:
                     break;

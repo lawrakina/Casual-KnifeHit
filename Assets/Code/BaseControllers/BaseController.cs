@@ -51,6 +51,7 @@ namespace Code.BaseControllers{
         /// <param name="activate">Показать после создания зависимые вьюшки?</param>
         protected BaseController(bool activate = false)
         {
+            Controllers.Add(this);
             Create?.Invoke(Id);
             if (activate)
             {
@@ -244,6 +245,7 @@ namespace Code.BaseControllers{
         {
             if (!_isDisposed)
             {
+                Controllers.Remove(this);
                 if (disposing)
                 {
                     // Deactivate?.Invoke(Id);
