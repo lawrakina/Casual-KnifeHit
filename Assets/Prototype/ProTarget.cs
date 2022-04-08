@@ -16,11 +16,5 @@ namespace Prototype{
                 other.rigidbody.bodyType = RigidbodyType2D.Kinematic;
             }
         }
-
-        public void OnCollision(GameObject gameObject){
-            if (gameObject.TryGetComponent(out ICollision collision)){
-                gameObject.transform.SetParent(this.transform);
-            }
-        }
     }
 }

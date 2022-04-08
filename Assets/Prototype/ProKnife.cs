@@ -15,14 +15,5 @@ namespace Prototype{
                 transform.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
             }
         }
-
-        // public void OnCollision(GameObject gameObject){
-        //     if (gameObject.TryGetComponent(out ProTarget target)){
-        //         Dbg.Log($"Попадание в цель");
-        //     }else if (gameObject.TryGetComponent(out ProKnife knife)){
-        //         Dbg.Log($"Ножом в нож!");
-        //         knife.transform.SetParent(null);
-        //     }
-        // }
     }
 }
