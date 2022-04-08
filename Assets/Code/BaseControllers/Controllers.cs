@@ -5,7 +5,7 @@ using Code.BaseControllers.TimeRemaining;
 
 
 namespace Code.BaseControllers{
-    public sealed class Controllers :  IExecute, IFixedExecute, ILateExecute, IInitialization, ICleanup
+    public sealed class Controllers :  IExecute, IFixedExecute, ILateExecute, IInitialization, IDisposable
     {
         public Controllers()
         {
@@ -14,7 +14,7 @@ namespace Code.BaseControllers{
             _executeControllers.Add(new TimeRemainingController());
             _lateControllers = new List<ILateExecute>();
             _fixedControllers = new List<IFixedExecute>();
-            _cleanupControllers = new List<ICleanup>();
+            _disposablesControllers = new List<IDisposable>();
         }
         
 
@@ -22,7 +22,7 @@ namespace Code.BaseControllers{
         private readonly List<IExecute> _executeControllers;
         private readonly List<IFixedExecute> _fixedControllers;
         private readonly List<ILateExecute> _lateControllers;
-        private readonly List<ICleanup> _cleanupControllers;
+        private readonly List<IDisposable> _disposablesControllers;
 
         public Guid Id => Guid.Empty;
         public bool IsOn => true;
@@ -37,7 +37,7 @@ namespace Code.BaseControllers{
 
             if (controller is ILateExecute lateExecuteController) _lateControllers.Add(lateExecuteController);
 
-            if (controller is ICleanup cleanupController) _cleanupControllers.Add(cleanupController);
+            if (controller is IDisposable disposableController) _disposablesControllers.Add(disposableController);
         }
 
         public void Init()
@@ -67,12 +67,11 @@ namespace Code.BaseControllers{
                 _lateControllers[index].LateExecute(deltaTime);
         }
 
-        public void Cleanup()
-        {
-            for (var index = 0; index < _cleanupControllers.Count; ++index) 
-                _cleanupControllers[index].Cleanup();
+        public void Dispose(){
+            for (var index = 0; index < _disposablesControllers.Count; ++index) 
+                _disposablesControllers[index].Dispose();
         }
-        
+
         public void Remove(IController controller)
         {
             for (var index = 0; index < _executeControllers.Count; ++index)
