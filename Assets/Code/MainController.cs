@@ -1,5 +1,6 @@
 ﻿using System;
 using Code.BaseControllers;
+using Code.Data;
 using Code.Fight;
 using UniRx;
 

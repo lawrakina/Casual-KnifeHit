@@ -1,10 +1,9 @@
-﻿using Code.Data;
-using UniRx;
+﻿using UniRx;
 using UnityEngine;
 
 
-namespace Code{
-    internal struct GameData{
+namespace Code.Data{
+    internal class GameData{
         public Transform TargetPosition{ get; set; }
         public Transform ThorwPosition{ get; set; }
         public ReactiveProperty<GameState> GameState{ get; set; }

@@ -1,5 +1,5 @@
 ﻿namespace Code.Data{
-    internal struct PlayerData{
+    internal class PlayerData{
         public PlayerProgress Progress{ get; set; }
     }
 }

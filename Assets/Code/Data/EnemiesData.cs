@@ -1,5 +1,5 @@
 ﻿namespace Code.Data{
-    internal struct EnemiesData{
+    internal class EnemiesData{
         public ListStandardEnemies ListStandardEnemies{ get; set; }
         public ListBosses ListBosses{ get; set; }
     }
