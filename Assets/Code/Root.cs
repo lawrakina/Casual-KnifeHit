@@ -38,8 +38,8 @@ namespace Code{
 
         private EnemiesData LoadEnemiesSettings(){
             var result = new EnemiesData();
-            result.ListStandardEnemies = ResourceLoader.LoadConfig<ListStandardEnemies>();
-            result.ListBosses = ResourceLoader.LoadConfig<ListBosses>();
+            result.Levels = ResourceLoader.LoadConfig<ListOfLevels>();
+            result.ListEnemies = ResourceLoader.LoadConfig<ListEnemies>();
             return result;
         }
 
