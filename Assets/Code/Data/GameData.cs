@@ -10,5 +10,6 @@ namespace Code.Data{
         public PlayerData PlayerData{ get; set; }
         public EnemiesData EnemiesData{ get; set; }
         public KnivesData KnivesData{ get; set; }
+        public UiElements UiElements{ get; set; }
     }
 }

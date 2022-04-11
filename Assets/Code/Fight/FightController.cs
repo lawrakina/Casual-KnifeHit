@@ -5,24 +5,29 @@ using Code.BaseControllers;
 using Code.Data;
 using Code.Extensions;
 using Code.Knife;
+using Code.Ui.Fight;
 using UniRx;
+using UnityEngine;
 using Random = UnityEngine.Random;
 
 
 namespace Code.Fight{
     internal class FightController : BaseController{
         private readonly GameData _gameData;
+        private readonly Transform _placeForUi;
         private Level.Level[] _levels;
         private FightModel _fightModel;
 
-        public FightController(GameData gameData) : base(true){
+        public FightController(GameData gameData, Transform placeForUi) : base(true){
             _gameData = gameData;
+            _placeForUi = placeForUi;
 
             InitModel();
             
             _fightModel.Level.Subscribe(OnChangeLevel).AddTo(_subscriptions);
             _fightModel.FightState.Subscribe(OnChangeFightState).AddTo(_subscriptions);
-            
+
+            var uiFightController = new UiFightController(_gameData, _fightModel, _placeForUi);
             var targetController = new TargetFightController(_gameData, _fightModel);
             var knifeController = new KnifeFightController(_gameData, _fightModel);
 

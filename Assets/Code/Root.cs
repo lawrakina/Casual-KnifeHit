@@ -13,7 +13,8 @@ namespace Code{
         private Transform _throwPosition;
         [SerializeField]
         private GameState _stateAfterStart = GameState.Fight;
-
+        [SerializeField]
+        private Transform _placeForUi;
         private void Awake(){
             var gameData = new GameData{
                 TargetPosition = _targetPosition,
@@ -21,14 +22,19 @@ namespace Code{
                 GameState = new ReactiveProperty<GameState>{Value = _stateAfterStart},
                 PlayerData = LoadPlayerSettings(),
                 EnemiesData = LoadEnemiesSettings(),
-                KnivesData = LoadKnivesData()
+                KnivesData = LoadKnivesData(),
+                UiElements = LoadUiElements()
             };
 
-            var mainController = new MainController(true, gameData);
+            var mainController = new MainController(true, gameData, _placeForUi);
 
             gameData.GameState.Value = GameState.Fight;
             
             Controllers.Init();
+        }
+
+        private UiElements LoadUiElements(){
+            return ResourceLoader.LoadConfig<UiElements>();
         }
 
         private PlayerData LoadPlayerSettings(){

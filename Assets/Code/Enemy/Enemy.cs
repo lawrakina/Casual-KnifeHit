@@ -1,9 +1,11 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 
 namespace Code.Enemy{
-    public class Enemy : MonoBehaviour {
-        public GameObject View;
+    [Serializable]
+    public class Enemy {
+        public TargetView View;
         public bool IsBoss;
     }
 }

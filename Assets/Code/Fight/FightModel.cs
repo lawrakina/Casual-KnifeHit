@@ -8,7 +8,6 @@ using UnityEngine;
 namespace Code.Fight{
     [CreateAssetMenu(fileName = nameof(FightModel), menuName = "Models/"+nameof(FightModel))]
     public class FightModel: ScriptableObject{
-        [SerializeField]
         public ReactiveProperty<Level.Level> Level{ get; set; }
         public float FightTimer{ get; set; }
         public Queue<IKnife> QueueOfKnivesCount{ get; set; }
@@ -16,6 +15,7 @@ namespace Code.Fight{
         public int DificultyLevel{ get; set; }
         public ReactiveCommand OnThrowKnife{ get; set; }
         public IKnife ActiveKnife{ get; set; }
+        public int HitCounts{ get; set; }
     }
 
     public enum FightState{

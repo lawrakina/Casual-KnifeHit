@@ -5,6 +5,7 @@ using Code.BaseControllers;
 using Code.BaseControllers.Interfaces;
 using Code.Data;
 using Code.Extensions;
+using Code.Knife;
 using UniRx;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -15,7 +16,7 @@ namespace Code.Fight{
     internal class TargetFightController : BaseController, IExecute{
         private readonly GameData _gameData;
         private readonly FightModel _model;
-        private GameObject _view;
+        private TargetView _view;
         private ReactiveProperty<Level.Level> _level;
         
         /// <summary>
@@ -48,8 +49,19 @@ namespace Code.Fight{
 
             // StartCoroutine(); надо запустить кортину что бы инстантировать таргет в следующем после уничтожения кадре
             _view = ResourceLoader.InstantiateObject(enemy.View, _gameData.TargetPosition, false);
+            
+            _view.OnCollisionEnter2d.Subscribe(CollisionOn).AddTo(_subscriptions);
+
         }
 
+        private void CollisionOn(GameObject other){
+            if (other.transform.TryGetComponent(out IKnife knife)){
+                Dbg.Log($"В цель попали:{other}");
+                knife.View.transform.SetParent(_view.transform);
+                knife.Rigidbody2D.bodyType = RigidbodyType2D.Kinematic;
+            }
+        }
+        
         private void OnChangeFightState(FightState state){
             switch (state){
                 case FightState.Fight:

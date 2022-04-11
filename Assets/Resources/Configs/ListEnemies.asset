@@ -13,7 +13,11 @@ MonoBehaviour:
   m_Name: ListEnemies
   m_EditorClassIdentifier: 
   List:
-  - {fileID: 4207389800525879685, guid: bab7311dac51b7d4986934a8e24e609e, type: 3}
-  - {fileID: 1668272975706699163, guid: 7b259088becfa6c4bb01339baff8c5f4, type: 3}
-  - {fileID: 7224827832577731615, guid: e50c09d4d0a8e564db346457b1e37b51, type: 3}
-  - {fileID: 1257524218901053031, guid: a64eaeb318e3ca54f9543331e6876b68, type: 3}
+  - View: {fileID: 2868722558308144658, guid: bab7311dac51b7d4986934a8e24e609e, type: 3}
+    IsBoss: 0
+  - View: {fileID: 6429396469057648116, guid: e50c09d4d0a8e564db346457b1e37b51, type: 3}
+    IsBoss: 0
+  - View: {fileID: 3751225702812432172, guid: a64eaeb318e3ca54f9543331e6876b68, type: 3}
+    IsBoss: 0
+  - View: {fileID: 2053467796304032355, guid: 7b259088becfa6c4bb01339baff8c5f4, type: 3}
+    IsBoss: 1

@@ -9,9 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d81d600da17d49128da17ebba760d544, type: 3}
-  m_Name: PlayerProgress
+  m_Script: {fileID: 11500000, guid: 69fd88acd8e74ce9a07a70670cc60702, type: 3}
+  m_Name: UiElements
   m_EditorClassIdentifier: 
-  Attempts: 0
-  Score: 0
-  ForceOfThrowing: 400
+  fightUiView: {fileID: 5898751950940556193, guid: d88b25cdbabb81c45926b677a4b4fe7a, type: 3}
