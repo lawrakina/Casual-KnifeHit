@@ -136,7 +136,7 @@ GameObject:
   m_Layer: 0
   m_Name: ThrowPosition
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 7148428337604731935, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -520,7 +520,7 @@ GameObject:
   m_Layer: 0
   m_Name: TargetPosition
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -810,7 +810,6 @@ GameObject:
   - component: {fileID: 2049487389}
   - component: {fileID: 2049487388}
   - component: {fileID: 2049487387}
-  - component: {fileID: 2049487390}
   m_Layer: 5
   m_Name: ThrowButton
   m_TagString: Untagged
@@ -881,7 +880,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2049487390}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ProThrowKnife, Assembly-CSharp
         m_MethodName: ThrowKnife
         m_Mode: 1
@@ -931,17 +930,3 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2049487385}
   m_CullTransparentMesh: 1
---- !u!114 &2049487390
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2049487385}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09e30da5442301b4998908131362cab6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _startPosition: {fileID: 350503183}
-  _knife: {fileID: 5591019214955576404, guid: 8857e5ebe44c2cc43a8a56b951a1d1b2, type: 3}

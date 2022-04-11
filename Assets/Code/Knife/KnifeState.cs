@@ -1,5 +1,5 @@
 ﻿namespace Code.Knife{
-    internal enum KnifeState{
+    public enum KnifeState{
         Static,
         Dynamic
     }

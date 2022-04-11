@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b104e73304cc4631ab7d25f67b5a8b80, type: 3}
+  m_Name: ListKnivesData
+  m_EditorClassIdentifier: 
+  List:
+  - {fileID: 6338331206628691178, guid: b44a2ea9a1ed6fe4d9fafe246d604324, type: 3}
+  - {fileID: 2467755455527200902, guid: 887cefae0627e1a4b98bda7b3137f7fe, type: 3}
+  - {fileID: 2548628015536201077, guid: 9e51ae1449c102d4695414d9e58cf9f5, type: 3}
+  - {fileID: 6656672562930043250, guid: 02d25147dace8944096211a6377f67af, type: 3}
+  - {fileID: 1740003460999896105, guid: 5f7cbbaf2d48867479f3d49d606c1de2, type: 3}
+  - {fileID: 2372651083250291121, guid: 7db42452b5b84d942beec42d3f018175, type: 3}

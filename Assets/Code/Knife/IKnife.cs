@@ -3,9 +3,10 @@ using UnityEngine;
 
 
 namespace Code.Knife{
-    internal interface IKnife{
+    public interface IKnife{
         Guid Id{ get; }
-        Transform View{ get; set; }
+        Transform View{ get; }
+        Rigidbody2D Rigidbody2D{ get; }
         KnifeState State{ get; set; }
     }
 }

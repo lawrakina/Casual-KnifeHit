@@ -26,6 +26,8 @@ namespace Code{
 
             var mainController = new MainController(true, gameData);
 
+            gameData.GameState.Value = GameState.Fight;
+            
             Controllers.Init();
         }
 
