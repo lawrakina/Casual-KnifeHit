@@ -1,6 +1,6 @@
 ﻿namespace Code.Data{
-    internal class EnemiesData{
-        public ListOfLevels Levels { get; set; }
+    internal class GameSettings{
+        public Levels Levels { get; set; }
         public ListEnemies ListEnemies{ get; set; }
     }
 }

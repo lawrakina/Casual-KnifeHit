@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Code.BaseControllers;
@@ -64,11 +65,16 @@ namespace Code.Fight{
                 case FightState.Loss:
                     _fightModel.DificultyLevel = 0;
                     //Show UI window of Loos and return to main window
-                    _gameData.GameState.Value = GameState.Menu;
+                    Controllers.StartCoroutine(SwitchGameState(GameState.Menu));
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(state), state, null);
             }
+        }
+
+        private IEnumerator SwitchGameState(GameState gameState){
+            yield return new WaitForSeconds(_gameData.GameSettings.Levels.WaitingTimeAtEndOfLevel);
+            _gameData.GameState.Value = gameState;
         }
 
         private void OnChangeLevel(Level.Level level){
@@ -76,7 +82,7 @@ namespace Code.Fight{
         }
         
         private void LoadLevel(){
-            _levels = _gameData.EnemiesData.Levels.List.Where
+            _levels = _gameData.GameSettings.Levels.List.Where
                 (x => x.DificultyLevel == _fightModel.DificultyLevel).ToArray();
             Dbg.Warning($"Levels count:{_levels.Length}");
             _fightModel.Level.Value = _levels[Random.Range(0, _levels.Length)];

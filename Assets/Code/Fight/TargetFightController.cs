@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Linq;
 using System.Threading.Tasks;
 using Code.BaseControllers;
@@ -44,7 +45,7 @@ namespace Code.Fight{
             _minSpeedRotateTarget = _level.Value.SpeedRotation - _level.Value.SpeedDelta;
             _maxSpeedRotateTarget = _level.Value.SpeedRotation + _level.Value.SpeedDelta;
 
-            var enemies = _gameData.EnemiesData.ListEnemies.List.Where(x => x.IsBoss == _level.Value.IsBossLevel).ToArray();
+            var enemies = _gameData.GameSettings.ListEnemies.List.Where(x => x.IsBoss == _level.Value.IsBossLevel).ToArray();
             var enemy = enemies[Random.Range(0, enemies.Length)];
 
             // StartCoroutine(); надо запустить кортину что бы инстантировать таргет в следующем после уничтожения кадре
@@ -75,14 +76,19 @@ namespace Code.Fight{
                 case FightState.Loss:
                     Dbg.Log($"Destroy target");
                     
-                    Object.Destroy(_view.gameObject);
+                    Controllers.StartCoroutine(DeferredDestroy(_view.gameObject));
                     //Destroy target
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(state), state, null);
             }
         }
-        
+
+        private IEnumerator DeferredDestroy(GameObject gameObject){
+            yield return new WaitForSeconds(_gameData.GameSettings.Levels.WaitingTimeAtEndOfLevel);
+            Object.Destroy(gameObject);
+        }
+
         public void Execute(float deltaTime){
             if (_model.FightState.Value == FightState.Fight){
                 if(!_level.Value.VariableSpeed)
@@ -99,6 +105,24 @@ namespace Code.Fight{
                     }    
                 }
             }
+        }
+
+        public override void Dispose(){
+            Controllers.StartCoroutine(DeferredDispose());
+        }
+
+        private IEnumerator DeferredDispose(){
+            Dbg.Log($"Start Coroutine");
+            foreach (var child in _view.GetComponentsInChildren<Transform>()){
+                child.SetParent(null);
+                if(child.TryGetComponent<Rigidbody2D>(out Rigidbody2D rigidBody))
+                {
+                    rigidBody.AddForce(Vector2.one, ForceMode2D.Impulse);
+                }
+            }
+
+            yield return new WaitForSeconds(_gameData.GameSettings.Levels.WaitingTimeAtEndOfLevel);
+            base.Dispose();
         }
     }
 }

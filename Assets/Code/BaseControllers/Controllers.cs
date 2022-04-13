@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Code.BaseControllers.Interfaces;
 using Code.BaseControllers.TimeRemaining;
@@ -20,6 +21,8 @@ namespace Code.BaseControllers{
         private static readonly List<IFixedExecute> _fixedControllers;
         private static readonly List<ILateExecute> _lateControllers;
         private static readonly List<IDisposable> _disposablesControllers;
+        
+        public static Root RootMonoBehaviour{ get; set; }
 
         public static void Add(IController controller){
             if (controller is IInitialization initializeController){
@@ -90,6 +93,10 @@ namespace Code.BaseControllers{
                 if (_lateControllers[index].Id == controller.Id)
                     _lateControllers.RemoveAt(index);
             }
+        }
+
+        public static void StartCoroutine(IEnumerator obj){
+            RootMonoBehaviour.StartCoroutine(obj);
         }
     }
 }

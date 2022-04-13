@@ -21,7 +21,7 @@ namespace Code{
                 ThorwPosition = _throwPosition,
                 GameState = new ReactiveProperty<GameState>{Value = _stateAfterStart},
                 PlayerData = LoadPlayerSettings(),
-                EnemiesData = LoadEnemiesSettings(),
+                GameSettings = LoadEnemiesSettings(),
                 KnivesData = LoadKnivesData(),
                 UiElements = LoadUiElements()
             };
@@ -29,7 +29,8 @@ namespace Code{
             var mainController = new MainController(true, gameData, _placeForUi);
 
             gameData.GameState.Value = GameState.Menu;
-            
+
+            Controllers.RootMonoBehaviour = this;
             Controllers.Init();
         }
 
@@ -44,9 +45,9 @@ namespace Code{
             return result;
         }
 
-        private EnemiesData LoadEnemiesSettings(){
-            var result = new EnemiesData();
-            result.Levels = ResourceLoader.LoadConfig<ListOfLevels>();
+        private GameSettings LoadEnemiesSettings(){
+            var result = new GameSettings();
+            result.Levels = ResourceLoader.LoadConfig<Levels>();
             result.ListEnemies = ResourceLoader.LoadConfig<ListEnemies>();
             return result;
         }
@@ -76,6 +77,7 @@ namespace Code{
         }
 
         private void OnDestroy(){
+            StopAllCoroutines();
             Controllers.Dispose();
         }
     }
