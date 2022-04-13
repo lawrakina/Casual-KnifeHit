@@ -26,7 +26,7 @@ namespace Code.Fight{
         private float _minSpeedRotateTarget;
         private float _maxSpeedRotateTarget;
 
-        public TargetFightController(GameData gameData, FightModel model) : base(true){
+        public TargetFightController(bool active, GameData gameData, FightModel model) : base(active){
             _gameData = gameData;
             _model = model;
             _level = _model.Level;
@@ -52,6 +52,7 @@ namespace Code.Fight{
             
             _view.OnCollisionEnter2d.Subscribe(CollisionOn).AddTo(_subscriptions);
 
+            AddGameObjects(_view.gameObject);
         }
 
         private void CollisionOn(GameObject other){
@@ -69,9 +70,12 @@ namespace Code.Fight{
                 case FightState.Win:
                     Dbg.Log($"Destroy target");
                     //Destroy Target
+                    
                     break;
                 case FightState.Loss:
                     Dbg.Log($"Destroy target");
+                    
+                    Object.Destroy(_view.gameObject);
                     //Destroy target
                     break;
                 default:

@@ -28,7 +28,7 @@ namespace Code{
 
             var mainController = new MainController(true, gameData, _placeForUi);
 
-            gameData.GameState.Value = GameState.Fight;
+            gameData.GameState.Value = GameState.Menu;
             
             Controllers.Init();
         }

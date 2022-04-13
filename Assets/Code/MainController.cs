@@ -1,7 +1,9 @@
 ﻿using System;
 using Code.BaseControllers;
 using Code.Data;
+using Code.Extensions;
 using Code.Fight;
+using Code.Ui.Menu;
 using UniRx;
 using UnityEngine;
 
@@ -12,10 +14,12 @@ namespace Code{
         private readonly Transform _placeForUi;
         private GameState _oldState = GameState.None;
         private FightController _fightController;
+        private MenuController _menuController;
 
         public MainController(bool active, GameData gameData, Transform placeForUi): base(active){
             _gameData = gameData;
             _placeForUi = placeForUi;
+            
 
             _gameData.GameState.Subscribe(OnChangeGameState).AddTo(_subscriptions);
         }
@@ -29,9 +33,12 @@ namespace Code{
                 case GameState.HelloWindow:
                     break;
                 case GameState.Menu:
+                    _fightController?.Dispose();
+                    _menuController = new MenuController(_gameData, _placeForUi);
                     break;
                 case GameState.Fight:
                     _fightController = new FightController(_gameData, _placeForUi);
+                    _menuController?.Dispose();
                     break;
                 case GameState.Ads:
                     break;

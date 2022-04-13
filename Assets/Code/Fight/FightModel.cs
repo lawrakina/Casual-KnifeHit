@@ -15,7 +15,8 @@ namespace Code.Fight{
         public int DificultyLevel{ get; set; }
         public ReactiveCommand OnThrowKnife{ get; set; }
         public IKnife ActiveKnife{ get; set; }
-        public int HitCounts{ get; set; }
+        public int HitCountsForWin{ get; set; }
+        public ReactiveProperty<int> HitCounts{ get; set; }
     }
 
     public enum FightState{

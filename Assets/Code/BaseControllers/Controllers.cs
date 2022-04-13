@@ -41,7 +41,7 @@ namespace Code.BaseControllers{
                 Dbg.Log($"Controller |{controller}| added, is type: ILateExecute");
                 _lateControllers.Add(lateExecuteController);
             }
-
+            
             if (controller is IDisposable disposableController){
                 Dbg.Log($"Controller |{controller}| added, is type: IDisposable");
                 _disposablesControllers.Add(disposableController);

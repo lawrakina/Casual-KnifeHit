@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Code.BaseControllers;
+using Code.BaseControllers.Interfaces;
 using Code.Data;
 using Code.Extensions;
 using Code.Knife;
@@ -12,7 +13,7 @@ namespace Code.Fight{
         private readonly GameData _gameData;
         private readonly FightModel _model;
 
-        public KnifeFightController(GameData gameData, FightModel model){
+        public KnifeFightController(bool active, GameData gameData, FightModel model) : base(active){
             _gameData = gameData;
             _model = model;
 
@@ -29,7 +30,12 @@ namespace Code.Fight{
                 item.Collider2D = item.View.GetComponent<Collider2D>();
                 item.Rigidbody2D = item.View.GetComponent<Rigidbody2D>();
                 item.OnCollisionEnter2d.Subscribe(CollisionOnTarget).AddTo(_subscriptions);
+                
+                AddGameObjects(item.gameObject);
+                
                 _model.QueueOfKnivesCount.Enqueue(item);
+
+                _model.HitCountsForWin++;
             }
 
             var knife = _model.QueueOfKnivesCount.Dequeue();
@@ -39,17 +45,16 @@ namespace Code.Fight{
         private void CollisionOnTarget(GameObject other){
             if (other.transform.TryGetComponent(out TargetView target)){
                 Dbg.Log($"Попадание в цель");
-                
-                _model.HitCounts++;
-                
-            }else if (other.transform.TryGetComponent(out IKnife knife)){
-                Dbg.Log($"Ножом в нож!");
 
-                _model.FightState.Value = FightState.Loss;
+                _model.HitCounts.Value++;
+            } else if (other.transform.TryGetComponent(out IKnife knife)){
+                Dbg.Log($"Ножом в нож!");
                 
                 knife.View.transform.SetParent(null);
                 knife.Rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
                 _model.ActiveKnife.Rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
+                
+                _model.FightState.Value = FightState.Loss;
             }
         }
 
@@ -66,7 +71,7 @@ namespace Code.Fight{
             _model.ActiveKnife.Rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
             _model.ActiveKnife.Rigidbody2D.AddForce(new Vector2(0f, _gameData.PlayerData.Progress.ForceOfThrowing));
 
-            if(_model.QueueOfKnivesCount.Count > 0)
+            if (_model.QueueOfKnivesCount.Count > 0)
                 ActivateKnife(_model.QueueOfKnivesCount.Dequeue());
         }
     }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Code.BaseControllers;
+using Code.BaseControllers.Interfaces;
 using Code.Data;
 using Code.Extensions;
 using Code.Knife;
@@ -17,6 +18,9 @@ namespace Code.Fight{
         private readonly Transform _placeForUi;
         private Level.Level[] _levels;
         private FightModel _fightModel;
+        private UiFightController _uiFightController;
+        private TargetFightController _targetController;
+        private KnifeFightController _knifeController;
 
         public FightController(GameData gameData, Transform placeForUi) : base(true){
             _gameData = gameData;
@@ -27,9 +31,12 @@ namespace Code.Fight{
             _fightModel.Level.Subscribe(OnChangeLevel).AddTo(_subscriptions);
             _fightModel.FightState.Subscribe(OnChangeFightState).AddTo(_subscriptions);
 
-            var uiFightController = new UiFightController(_gameData, _fightModel, _placeForUi);
-            var targetController = new TargetFightController(_gameData, _fightModel);
-            var knifeController = new KnifeFightController(_gameData, _fightModel);
+            _uiFightController = new UiFightController(true,_gameData, _fightModel, _placeForUi);
+            AddAsManagedController(_uiFightController);
+            _targetController = new TargetFightController(true,_gameData, _fightModel);
+            AddAsManagedController(_targetController);
+            _knifeController = new KnifeFightController(true,_gameData, _fightModel);
+            AddAsManagedController(_knifeController);
 
             _fightModel.FightState.Value = FightState.Fight;
         }
@@ -41,6 +48,7 @@ namespace Code.Fight{
             _fightModel.DificultyLevel = -1;
             _fightModel.QueueOfKnivesCount = new Queue<IKnife>();
             _fightModel.OnThrowKnife = new ReactiveCommand();
+            _fightModel.HitCounts = new ReactiveProperty<int>();
         }
 
         private void OnChangeFightState(FightState state){
@@ -56,6 +64,7 @@ namespace Code.Fight{
                 case FightState.Loss:
                     _fightModel.DificultyLevel = 0;
                     //Show UI window of Loos and return to main window
+                    _gameData.GameState.Value = GameState.Menu;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(state), state, null);

@@ -1,4 +1,5 @@
 ﻿using Code.BaseControllers;
+using Code.BaseControllers.Interfaces;
 using Code.Data;
 using Code.Extensions;
 using Code.Fight;
@@ -12,13 +13,14 @@ namespace Code.Ui.Fight{
         private readonly Transform _placeForUi;
         private FightUiView _view;
 
-        public UiFightController(GameData gameData, FightModel fightModel, Transform placeForUi): base(true){
+        public UiFightController(bool active,GameData gameData, FightModel fightModel, Transform placeForUi): base(active){
             _gameData = gameData;
             _fightModel = fightModel;
             _placeForUi = placeForUi;
 
             _view = ResourceLoader.InstantiateObject(_gameData.UiElements.fightUiView, _placeForUi, false);
             _view.Init(_fightModel.OnThrowKnife);
+            AddGameObjects(_view.GameObject);
         }
     }
 }

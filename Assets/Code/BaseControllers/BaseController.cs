@@ -110,7 +110,7 @@ namespace Code.BaseControllers{
         /// <param name="baseController">добавляемый контроллер</param>
         /// <param name="isToggle">включение и добавление к Toggle Group</param>
         /// <param name="isRoot">корневой контроллер, включается когда выключаются все дочерние</param>
-        protected void AddController(BaseController baseController, bool isToggle = false, bool isRoot = false)
+        protected void AddAsManagedController(BaseController baseController, bool isToggle = false, bool isRoot = false)
         {
             if(baseController == null)
                 return;
@@ -245,7 +245,6 @@ namespace Code.BaseControllers{
         {
             if (!_isDisposed)
             {
-                Controllers.Remove(this);
                 if (disposing)
                 {
                     // Deactivate?.Invoke(Id);
@@ -293,6 +292,7 @@ namespace Code.BaseControllers{
                 }
                 // освобождаем неуправляемые объекты
                 _isDisposed = true;
+                Controllers.Remove(this);
             }
         }
         

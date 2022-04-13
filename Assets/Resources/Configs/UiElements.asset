@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: UiElements
   m_EditorClassIdentifier: 
   fightUiView: {fileID: 5898751950940556193, guid: d88b25cdbabb81c45926b677a4b4fe7a, type: 3}
+  menuUiView: {fileID: 5391570674121245086, guid: e3f56f2c80354f74a8bc23a3a927dbdd, type: 3}
