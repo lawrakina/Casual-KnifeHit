@@ -9,5 +9,6 @@ namespace Code.Data{
     internal class UiElements : ScriptableObject{
         public FightUiView fightUiView;
         public MenuUiView menuUiView;
+        public GameoverUiView GameoverUiView;
     }
 }

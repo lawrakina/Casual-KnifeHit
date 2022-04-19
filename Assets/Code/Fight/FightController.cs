@@ -31,6 +31,7 @@ namespace Code.Fight{
             
             _fightModel.Level.Subscribe(OnChangeLevel).AddTo(_subscriptions);
             _fightModel.FightState.Subscribe(OnChangeFightState).AddTo(_subscriptions);
+            _fightModel.HitCounts.Subscribe(OnChangeHitCounts).AddTo(_subscriptions);
 
             _uiFightController = new UiFightController(true,_gameData, _fightModel, _placeForUi);
             AddAsManagedController(_uiFightController);
@@ -40,6 +41,13 @@ namespace Code.Fight{
             AddAsManagedController(_knifeController);
 
             _fightModel.FightState.Value = FightState.Fight;
+        }
+
+        private void OnChangeHitCounts(int value){
+            if (value >= _fightModel.HitCountsForWin){
+                _fightModel.HitCounts.Value = 0;
+                _fightModel.FightState.Value = FightState.Win;
+            }
         }
 
         private void InitModel(){

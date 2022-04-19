@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9956e2fa14f94059a696b94e72769825, type: 3}
   m_Name: Levels
   m_EditorClassIdentifier: 
+  WaitingTimeAtEndOfLevel: 2
   List:
-  - DificultyLevel: 4
+  - DificultyLevel: 0
     SpeedRotation: 80
     VariableSpeed: 0
     SpeedDelta: 0

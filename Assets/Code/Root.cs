@@ -1,6 +1,7 @@
 ﻿using Code.BaseControllers;
 using Code.Data;
 using Code.Extensions;
+using DG.Tweening;
 using UniRx;
 using UnityEngine;
 
@@ -26,6 +27,8 @@ namespace Code{
                 UiElements = LoadUiElements()
             };
 
+            DOTween.Init();
+            
             var mainController = new MainController(true, gameData, _placeForUi);
 
             gameData.GameState.Value = GameState.Menu;

@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Linq;
-using System.Threading.Tasks;
 using Code.BaseControllers;
 using Code.BaseControllers.Interfaces;
 using Code.Data;
 using Code.Extensions;
 using Code.Knife;
+using Code.Target;
 using UniRx;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -78,17 +78,17 @@ namespace Code.Fight{
         private void OnChangeFightState(FightState state){
             switch (state){
                 case FightState.Fight:
+                    Dbg.Log($"FightState.Fight");
                     break;
                 case FightState.Win:
-                    Dbg.Log($"Destroy target");
-                    //Destroy Target
-
-                    break;
-                case FightState.Loss:
-                    Dbg.Log($"Destroy target");
-
+                    Dbg.Log($"FightState.Win");
                     _isExecutable = false;
                     Controllers.StartCoroutine(DeferredDestroy(_view.gameObject));
+                    //Destroy Target
+                    break;
+                case FightState.Loss:
+                    Dbg.Log($"FightState.Loss");
+                    Controllers.StartCoroutine(DeferredEndingFight());
                     //Destroy target
                     break;
                 default:
@@ -96,6 +96,12 @@ namespace Code.Fight{
             }
         }
 
+        private IEnumerator DeferredEndingFight(){
+            _view.EndingFight();
+            yield return new WaitForSeconds(1);
+            Dbg.Log($"Level ended");
+        }
+        
         private IEnumerator DeferredDestroy(GameObject gameObject){
             gameObject.SetActive(false);
             _slicedParts.AddForceToParts();

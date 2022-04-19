@@ -4,6 +4,7 @@ using Code.BaseControllers.Interfaces;
 using Code.Data;
 using Code.Extensions;
 using Code.Knife;
+using Code.Target;
 using UniRx;
 using UnityEngine;
 
@@ -30,9 +31,9 @@ namespace Code.Fight{
                 item.Collider2D = item.View.GetComponent<Collider2D>();
                 item.Rigidbody2D = item.View.GetComponent<Rigidbody2D>();
                 item.OnCollisionEnter2d.Subscribe(CollisionOnTarget).AddTo(_subscriptions);
-                
+
                 AddGameObjects(item.gameObject);
-                
+
                 _model.QueueOfKnivesCount.Enqueue(item);
 
                 _model.HitCountsForWin++;
@@ -49,11 +50,11 @@ namespace Code.Fight{
                 _model.HitCounts.Value++;
             } else if (other.transform.TryGetComponent(out IKnife knife)){
                 Dbg.Log($"Ножом в нож!");
-                
+
                 knife.View.transform.SetParent(null);
                 knife.Rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
                 _model.ActiveKnife.Rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
-                
+
                 _model.FightState.Value = FightState.Loss;
             }
         }
@@ -66,13 +67,15 @@ namespace Code.Fight{
         }
 
         private void ThrowKnife(){
-            // _model.ActiveKnife.View.position = _model.ActiveKnife.View.position + new Vector3(0f,2,0f);
+            if (_model.ActiveKnife == null) return;
             _model.ActiveKnife.Collider2D.isTrigger = false;
             _model.ActiveKnife.Rigidbody2D.bodyType = RigidbodyType2D.Dynamic;
             _model.ActiveKnife.Rigidbody2D.AddForce(new Vector2(0f, _gameData.PlayerData.Progress.ForceOfThrowing));
 
             if (_model.QueueOfKnivesCount.Count > 0)
                 ActivateKnife(_model.QueueOfKnivesCount.Dequeue());
+            else
+                _model.ActiveKnife = null;
         }
     }
 }
